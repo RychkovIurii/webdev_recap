@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "text": "buy groceries",
+    "completed": false
+  },
+  {
+    "id": 2,
+    "text": "buy beer",
+    "completed": false
+  },
+  {
+    "id": 3,
+    "text": "wash dishes",
+    "completed": false
+  },
+  {
+    "id": 1728301707586,
+    "text": "buy bread",
+    "completed": false
+  }
+]
