@@ -74,3 +74,33 @@ SELECT * FROM todos LEFT JOIN todo_tags ON todos.id = todo_tags.todo_id;
   5 | Read book      | Finish chapter 5 of "The Great Gatsby" | f         | 2024-10-08 08:36:39.708708 |       5 |      5
   6 | Buy beer       | Sandels, San Miguel                    | f         | 2024-10-08 10:05:49.113582 |         |       
 (9 rows)
+
+###
+SELECT * FROM todos LEFT JOIN todo_tags ON todos.id=todo_tags.todo_id LEFT JOIN tags ON tags.id=todo_tags.tag_id;
+###
+ id |     title      |              description               | completed |         created_at         | todo_id | tag_id | id |   name   
+----+----------------+----------------------------------------+-----------+----------------------------+---------+--------+----+----------
+  1 | Buy groceries  | Milk, eggs, bread                      | f         | 2024-10-08 08:36:39.708708 |       1 |      1 |  1 | personal
+  1 | Buy groceries  | Milk, eggs, bread                      | f         | 2024-10-08 08:36:39.708708 |       1 |      4 |  4 | urgent
+  2 | Finish project | Complete the report by Friday          | f         | 2024-10-08 08:36:39.708708 |       2 |      2 |  2 | work
+  2 | Finish project | Complete the report by Friday          | f         | 2024-10-08 08:36:39.708708 |       2 |      4 |  4 | urgent
+  3 | Call mom       | Catch up and plan visit                | t         | 2024-10-08 08:36:39.708708 |       3 |      1 |  1 | personal
+  4 | Exercise       | Go for a 30-minute run                 | f         | 2024-10-08 08:36:39.708708 |       4 |      3 |  3 | health
+  5 | Read book      | Finish chapter 5 of "The Great Gatsby" | f         | 2024-10-08 08:36:39.708708 |       5 |      1 |  1 | personal
+  5 | Read book      | Finish chapter 5 of "The Great Gatsby" | f         | 2024-10-08 08:36:39.708708 |       5 |      5 |  5 | leisure
+  6 | Buy beer       | Sandels, San Miguel                    | f         | 2024-10-08 10:05:49.113582 |         |        |    | 
+(9 rows)
+
+
+###
+SELECT todos.*, ARRAY_AGG(tags.name) as tags FROM todos LEFT JOIN todo_tags ON todos.id=todo_tags.todo_id LEFT JOIN tags ON tags.id=todo_tags.tag_id GROUP BY todos.id;
+###
+ id |     title      |              description               | completed |         created_at         |        tags        
+----+----------------+----------------------------------------+-----------+----------------------------+--------------------
+  3 | Call mom       | Catch up and plan visit                | t         | 2024-10-08 08:36:39.708708 | {personal}
+  5 | Read book      | Finish chapter 5 of "The Great Gatsby" | f         | 2024-10-08 08:36:39.708708 | {personal,leisure}
+  4 | Exercise       | Go for a 30-minute run                 | f         | 2024-10-08 08:36:39.708708 | {health}
+  6 | Buy beer       | Sandels, San Miguel                    | f         | 2024-10-08 10:05:49.113582 | {NULL}
+  2 | Finish project | Complete the report by Friday          | f         | 2024-10-08 08:36:39.708708 | {work,urgent}
+  1 | Buy groceries  | Milk, eggs, bread                      | f         | 2024-10-08 08:36:39.708708 | {personal,urgent}
+(6 rows)

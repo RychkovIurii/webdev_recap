@@ -13,7 +13,7 @@ const pool = new Pool({
     port: 5432,
 });
 
-app.get('/', (req, res) => { // GET all tasks
+app.get('/', (req, res) => { // GET Hi there!
 	try {
 		res.send("Hi there!");
 	}
@@ -77,6 +77,17 @@ app.put('/tasks/:id', async (req, res) => {
         console.error(err.message);
         res.status(500).send('Server error');
     }
+});
+
+app.delete('/tasks/:id', async (req, res) => {
+	const { id } = req.params;
+	try {
+		await pool.query('DELETE FROM todos WHERE id = $1', [id]);
+		res.json({ message: 'Task deleted' });
+	} catch (err) {
+		console.error(err.message);
+		res.status(500).send('Server error');
+	}
 });
 
 app.listen(port, () => {
