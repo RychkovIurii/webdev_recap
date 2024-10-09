@@ -42,7 +42,7 @@ app.get('/db-check', async (req, res) => {
 
 app.get('/tasks', async (req, res) => {
     try {
-        const tasks = await pool.query('SELECT * FROM todos');
+        const tasks = await pool.query('SELECT * FROM todos ORDER BY title');
         res.json(tasks.rows);
     } catch (err) {
         console.error(err.message);
