@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './style.css'
 
 //Handle get todos (fetch, visualise, state)
@@ -11,24 +11,26 @@ import './style.css'
 
 //Handle complete todo (get, toggle)
 
-const [todoList, setTodoList] = useState([]);
-const [editingTodo, setEditingTodo] = useState(null);
-const [viewCompleted, setViewCompleted] = useState(false);
-const [editingText, setEditingText] = useState("");
+const App = () => {
 
-useEffect(() => {
-  getList();
-}, []);
+  const [todoList, setTodoList] = useState([]);
+  const [editingTodo, setEditingTodo] = useState(null);
+  const [viewCompleted, setViewCompleted] = useState(false);
+  const [editingText, setEditingText] = useState("");
 
-const getList = () => {
-  fetch("/tasks")
-    .then((response) => response.json())
-    .then((data) => setTodoList(data))
-    .catch((error) => console.log("Error fetching data.", error));
-};
+  useEffect(() => {
+    getList();
+  }, []);
 
+  const getList = () => {
+    fetch("/tasks")
+      .then((response) => response.json())
+      .then((data) => setTodoList(data))
+      .catch((error) => console.log("Error fetching data.", error));
+  };
 
-const App = () => (
+  return (
+
     <main className="container">
       <h1 className="text-white text-uppercase text-center my-4">Todo app</h1>
       <div className="row">
@@ -41,5 +43,6 @@ const App = () => (
       </div>
     </main>
   );
+}
 
 export default App
